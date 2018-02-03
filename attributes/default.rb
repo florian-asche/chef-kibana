@@ -11,6 +11,7 @@ default['kibana']['git']['type'] = 'sync' # checkout | sync
 default['kibana']['git']['config'] = 'kibana/config.js' # relative path of config file
 default['kibana']['git']['config_template'] = 'config.js.erb' # template to use for config
 default['kibana']['git']['config_template_cookbook'] = 'kibana_lwrp' # cookbook containing config template
+default['kibana']['git']['config_template5'] = 'config.js.erb'
 
 # Values to use for file method of installation
 default['kibana']['file']['type'] = 'tgz' # zip | tgz
@@ -20,6 +21,7 @@ default['kibana']['file']['checksum'] = nil # sha256 ( shasum -a 256 FILENAME )
 default['kibana']['file']['config'] = 'config/kibana.yml' # relative path of config file
 default['kibana']['file']['config_template'] = 'kibana.yml.erb' # template to use for config
 default['kibana']['file']['config_template_cookbook'] = 'kibana_lwrp' # cookbook containing config template
+default['kibana']['file']['config_template5'] = 'kibana5.yml.erb'
 
 # Kibana Java Web Server
 default['kibana']['java_webserver_port'] = 5601

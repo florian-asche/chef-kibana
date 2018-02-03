@@ -56,8 +56,10 @@ docroot = "#{node['kibana']['install_dir']}/current/kibana"
 kibana_config = "#{node['kibana']['install_dir']}/current/#{node['kibana'][install_type]['config']}"
 es_server = "#{node['kibana']['es_scheme']}#{node['kibana']['es_server']}:#{node['kibana']['es_port']}"
 
+config_template = Gem::Version.new(node['kibana']['version'].split('-')[0]) < Gem::Version.new('6.0.0')?'config_template_5':'config_template'
+
 template kibana_config do
-  source node['kibana'][install_type]['config_template']
+  source node['kibana'][install_type][config_template]
   cookbook node['kibana'][install_type]['config_template_cookbook']
   mode '0644'
   user kibana_user
