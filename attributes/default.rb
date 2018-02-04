@@ -46,7 +46,7 @@ default['kibana']['user'] = 'kibana'
 
 ## config template location and variables.
 # Kibana is served by a backend server. This controls which port to use.
-default['kibana']['config']['server.port'] = '5601'
+default['kibana']['config']['server.port'] = 5601
 default['kibana']['config']['server.host'] = 'localhost'
 default['kibana']['config']['server.name'] = 'kibana'
 # Kibana uses and index in Elasticsearch to store saved searches, visualizations
@@ -59,11 +59,11 @@ default['kibana']['config']['kibana.defaultAppId'] = 'discover'
 #default['kibana']['config']['elasticsearch.url'] = "http://127.0.0.1:9200"  # Automatic generated, but you can override if you need to
 # Time in milliseconds to wait for responses from the back end or elasticsearch.
 # This must be > 0
-default['kibana']['config']['elasticsearch.requestTimeout'] = '60000'
+default['kibana']['config']['elasticsearch.requestTimeout'] = 60000
 # Time in milliseconds for Elasticsearch to wait for responses from shards.
 # Note this should always be lower than "request_timeout".
 # Set to 0 to disable (not recommended).
-default['kibana']['config']['elasticsearch.shardTimeout'] = '30000'
+default['kibana']['config']['elasticsearch.shardTimeout'] = 30000
 # Set logging destination
 default['kibana']['config']['logging.dest'] = '/var/log/kibana/kibana.log'
 # Set verbose logging
