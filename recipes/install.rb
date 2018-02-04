@@ -17,8 +17,10 @@
 # limitations under the License.
 #
 
+# Gather installation type (can be git or file)
 install_type = node['kibana']['install_type']
 
+# Gather ip-adress of elasticsearch
 unless Chef::Config[:solo]
   es_server_results = search(:node, "roles:#{node['kibana']['es_role']} AND chef_environment:#{node.chef_environment}")
   unless es_server_results.empty?
@@ -26,8 +28,11 @@ unless Chef::Config[:solo]
   end
 end
 
+# Gather webserver install product
 webserver = 'nginx' # make nginx a default choice
 webserver = node['kibana']['webserver'] if !node['kibana']['webserver'].empty?
+
+# Create User
 if node['kibana']['user'].empty?
   if !node['kibana']['webserver'].empty?
     kibana_user = node[webserver]['user']
@@ -44,6 +49,7 @@ else
   end
 end
 
+# Install kibana
 kibana_install 'kibana' do
   user kibana_user
   group kibana_user
@@ -52,9 +58,9 @@ kibana_install 'kibana' do
   action :create
 end
 
+# Set some more variables
 docroot = "#{node['kibana']['install_dir']}/current/kibana"
 kibana_config = "#{node['kibana']['install_dir']}/current/#{node['kibana'][install_type]['config']}"
-
 node.override['kibana']['config']['elasticsearch.url'] = "#{node['kibana']['es_scheme']}#{node['kibana']['es_server']}:#{node['kibana']['es_port']}" unless node['kibana']['config']['elasticsearch.url']
 
 # generate yml kibana configuration from json (converted)
@@ -65,9 +71,9 @@ file ::File.join(kibana_config) do
   mode '0644'
 end
 
+# Install service
+# TODO: https://supermarket.chef.io/cookbooks/runit weiche einbauen für service oder runit
 if install_type == 'file'
-
-  include_recipe 'java::default' if node['kibana']['install_java']
   include_recipe 'runit::default'
 
   runit_service 'kibana' do
@@ -86,6 +92,7 @@ if install_type == 'file'
 
 end
 
+# Setup webserver
 kibana_web 'kibana' do
   type lazy { node['kibana']['webserver'] }
   docroot docroot
