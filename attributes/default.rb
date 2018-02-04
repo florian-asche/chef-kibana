@@ -64,10 +64,8 @@ default['kibana']['config']['elasticsearch.requestTimeout'] = 60000
 # Note this should always be lower than "request_timeout".
 # Set to 0 to disable (not recommended).
 default['kibana']['config']['elasticsearch.shardTimeout'] = 30000
-# Set logging destination
-default['kibana']['config']['logging.dest'] = '/var/log/kibana/kibana.log'
 # Set verbose logging
-default['kibana']['config']['logging.verbose'] = false
+#default['kibana']['config']['logging.verbose'] = false
 
 # nginx variables
 default['kibana']['nginx']['install_method'] = 'package'
