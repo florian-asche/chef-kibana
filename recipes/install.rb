@@ -69,6 +69,7 @@ file ::File.join(kibana_config) do
   owner kibana_user
   group kibana_user
   mode '0644'
+  notifies :restart, "runit_service[kibana]"
 end
 
 # Install service
