@@ -1,9 +1,9 @@
 Kibana Library Cookbook
 ===============
 
-A library cookbook for installing kibana 4.
+A library cookbook for installing kibana 6.
 
-If you wish to install Kibana3 try using the '1.3.x' releases of the cookbook.
+If you wish to install older version try another cookbook or older releases (3.0.2) of the cookbook.
 
 This is a library cookbook,  you can use you included `kibana_lwrp::install` recipe to install kibana, but it is more likely to be really useful for you to call the LWRPs directly from your own cookbook.  You can use the `kibana_lwrp::install` recipe as a guide and customize to your needs.
 

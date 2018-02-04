@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of kibana.
 
+## 4.0.2
+* Cookbook is no longer compatible with older version than 6.
+* Configuration is now json to yml. No Template needed.
+* Fixed Download path
+
 ## 3.0.2
 * Fix a notification that was to runit_service[nginx] instead of service[nginx].
 

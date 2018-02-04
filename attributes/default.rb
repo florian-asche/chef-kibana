@@ -2,29 +2,20 @@
 # `file` will download from elasticsearch.org
 # git is not really supported since the move to java based server.
 default['kibana']['install_type'] = 'file' # git | file
-default['kibana']['version'] = '4.2.1-linux-x64' # must match version number of kibana being installed
+default['kibana']['version'] = '6.1.3-linux-x86_64' # must match version number of kibana being installed
 
 # Values to use for git method of installation
 default['kibana']['git']['url'] = 'https://github.com/elasticsearch/kibana'
-default['kibana']['git']['branch'] = 'v3.1.2'
+default['kibana']['git']['branch'] = 'v6.1.3'
 default['kibana']['git']['type'] = 'sync' # checkout | sync
 default['kibana']['git']['config'] = 'kibana/config.js' # relative path of config file
-default['kibana']['git']['config_template'] = 'config.js.erb' # template to use for config
-default['kibana']['git']['config_template_cookbook'] = 'kibana_lwrp' # cookbook containing config template
-default['kibana']['git']['config_template5'] = 'config.js.erb'
 
 # Values to use for file method of installation
 default['kibana']['file']['type'] = 'tgz' # zip | tgz
 
 default['kibana']['file']['url'] = nil # calculated based on version, unless you override this
-default['kibana']['file']['checksum'] = nil # sha256 ( shasum -a 256 FILENAME )
+default['kibana']['file']['checksum'] = "19caf0c29db6c98c8bf5194deba0de7ce065cc10bc2175af6f4efdbc3b88e2a7" # sha256 ( shasum -a 256 FILENAME )
 default['kibana']['file']['config'] = 'config/kibana.yml' # relative path of config file
-default['kibana']['file']['config_template'] = 'kibana.yml.erb' # template to use for config
-default['kibana']['file']['config_template_cookbook'] = 'kibana_lwrp' # cookbook containing config template
-default['kibana']['file']['config_template5'] = 'kibana5.yml.erb'
-
-# Kibana Java Web Server
-default['kibana']['java_webserver_port'] = 5601
 
 # this is only used by the recipe.  if you use the LWRPs
 # (which you should) then install java from your own recipe.
@@ -53,14 +44,30 @@ default['kibana']['es_scheme'] = 'http://'
 # user to install kibana files as.  if left blank will use the default webserver user.
 default['kibana']['user'] = 'kibana'
 
-# config template location and variables.
-default['kibana']['config']['kibana_index']  = 'kibana-int'
-default['kibana']['config']['panel_names']   = %w(histogram map pie table filtering timepicker text fields hits dashcontrol column derivequeries trends bettermap query terms)
-default['kibana']['config']['default_route'] = '/dashboard/file/logstash.json'
-default['kibana']['config']['default_app_id'] = 'discover'
+## config template location and variables.
+# Kibana is served by a backend server. This controls which port to use.
+default['kibana']['config']['server.port'] = '5601'
+default['kibana']['config']['server.host'] = 'localhost'
+default['kibana']['config']['server.name'] = 'kibana'
+# Kibana uses and index in Elasticsearch to store saved searches, visualizations
+# and dashboard. It will create an new index if it doesn't already exist.
+default['kibana']['config']['kibana.index'] = 'kibana-int'
+# The default application to load.
+default['kibana']['config']['kibana.defaultAppId'] = 'discover'
 # include quote inside this next variable if not using window.location style variables...
 # e.g.  = "'http://elasticsearch.example.com:9200'"
-default['kibana']['config']['elasticsearch'] = 'window.location.protocol+"//"+window.location.hostname+":"+window.location.port'
+#default['kibana']['config']['elasticsearch.url'] = "http://127.0.0.1:9200"  # Automatic generated, but you can override if you need to
+# Time in milliseconds to wait for responses from the back end or elasticsearch.
+# This must be > 0
+default['kibana']['config']['elasticsearch.requestTimeout'] = '60000'
+# Time in milliseconds for Elasticsearch to wait for responses from shards.
+# Note this should always be lower than "request_timeout".
+# Set to 0 to disable (not recommended).
+default['kibana']['config']['elasticsearch.shardTimeout'] = '30000'
+# Set logging destination
+default['kibana']['config']['logging.dest'] = '/var/log/kibana/kibana.log'
+# Set verbose logging
+default['kibana']['config']['logging.verbose'] = false
 
 # nginx variables
 default['kibana']['nginx']['install_method'] = 'package'

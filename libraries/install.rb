@@ -77,7 +77,7 @@ class Chef
           temp_path = Chef::Config[:file_cache_path]
           case kb_args[:file_type]
           when 'tgz', 'zip'
-            download_url = kb_args[:file_url] || "https://download.elastic.co/kibana/kibana/kibana-#{kb_args[:version]}.tar.gz"
+            download_url = kb_args[:file_url] || "https://artifacts.elastic.co/downloads/kibana/kibana-#{kb_args[:version]}.tar.gz"
             remote_file "#{temp_path}/#{temp_file}" do
               checksum lazy { kb_args[:file_checksum] }
               source download_url
